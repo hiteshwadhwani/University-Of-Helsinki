@@ -78,6 +78,11 @@ const App = () => {
             setMessage(null);
           }, 5000);
 
+        }).catch((error) => {
+          setMessage(error.message);
+          setTimeout(() => {
+            setMessage(null);
+          } , 5000);
         });
       } else {
         e.preventDefault();
