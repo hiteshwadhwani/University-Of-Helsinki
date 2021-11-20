@@ -16,24 +16,30 @@ blogRouter.post("/", async (request, response) => {
   if (!body.title || !body.author) {
     return response.status(400).end();
   }
-  // const token = request.token;
 
-  // const decodedToken = await jwt.verify(token, process.env.SECRET);
-  const decodedToken = await request.userlogged;
+  // console.log(decodedToken);
   // console.log(decodedToken.id);
-  const user = await User.findById(decodedToken.id);
+
+  // console.log(user);
   // console.log(user);
   // console.log(user._id.toString());
   // console.log(user);
 
-  const blog = new Blog({
-    title: body.title,
-    author: body.author,
-    url: body.url,
-    likes: body.likes,
-    user: user._id,
-  });
   try {
+    //   const token = request.token;
+
+    // const decodedToken = await jwt.verify(token, process.env.SECRET);
+    const decodedToken = await request.userlogged;
+    // console.log(decodedToken);
+    const user = await User.findById(decodedToken.id);
+    const blog = new Blog({
+      title: body.title,
+      author: body.author,
+      url: body.url,
+      likes: body.likes,
+      user: user._id,
+    });
+
     const savedBlog = await blog.save();
     // console.log(savedBlog);
     user.blogs = user.blogs.concat(savedBlog._id);

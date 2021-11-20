@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const blogRouter = require("./controllers/blog");
 const userRouter = require("./controllers/user");
 const loginRouter = require("./controllers/login");
+const testingRouter = require("./controllers/blogTest");
 const { errorHandler, getToken, userExtractor } = require("./utils/middelware");
 
 //mongoose connection
@@ -28,6 +29,9 @@ app.use(userExtractor);
 app.use("/api/blogs", blogRouter);
 app.use("/api/users", userRouter);
 app.use("/api/login", loginRouter);
+if(process.env.NODE_ENV === 'test'){
+  app.use("/api/testing",testingRouter);
+}
 app.use(errorHandler);
 
 module.exports = app;
